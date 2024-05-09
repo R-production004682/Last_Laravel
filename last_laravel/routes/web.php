@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('customers.index'));
 });
+Route::resource('products' , ProductCOntroller::class);
+Route::resource('customers', CustomerController::class);
+Route::resource('orders', OrderController::class, ['except' => ['show']]);
+Route::post('shipping', [OrderController::class ,'update_shipping'])->name('orders.shipping');
